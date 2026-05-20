@@ -1,0 +1,61 @@
+{
+  "tag": "v13_augmented",
+  "weights": "nav_v13_augmented.npz",
+  "module": null,
+  "runs_per_seed": 5,
+  "duration_s": 60.0,
+  "seeds": [
+    {
+      "seed": 42,
+      "summary": {
+        "n_runs": 5,
+        "completion_rate": 0.0,
+        "median_lap_time": Infinity,
+        "mean_crashes": 0.0,
+        "max_checkpoints": 0
+      },
+      "runs": [
+        {
+          "steps": 0,
+          "elapsed": 60.01635217666626,
+          "checkpoints_passed": 0,
+          "crashes": 0,
+          "min_speed_streak": 0,
+          "track": []
+        },
+        {
+          "steps": 0,
+          "elapsed": 60.01648426055908,
+          "checkpoints_passed": 0,
+          "crashes": 0,
+          "min_speed_streak": 0,
+          "track": []
+        },
+        {
+          "steps": 0,
+          "elapsed": 60.01910948753357,
+          "checkpoints_passed": 0,
+          "crashes": 0,
+          "min_speed_streak": 0,
+          "track": []
+        },
+        {
+          "steps": 0,
+          "elapsed": 60.03641438484192,
+          "checkpoints_passed": 0,
+          "crashes": 0,
+          "min_speed_streak": 0,
+          "track": []
+        },
+        {
+          "steps": 0,
+          "elapsed": 60.04771828651428,
+          "checkpoints_passed": 0,
+          "crashes": 0,
+          "min_speed_streak": 0,
+          "track": []
+        }
+      ]
+    }
+  ]
+}

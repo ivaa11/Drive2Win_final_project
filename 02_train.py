@@ -94,14 +94,14 @@ def inspect_dataset(states_raw, actions, tag: str):
     viz.plot_heading_vs_steering(states_raw, actions, out=f"fig_heading_{tag}.png")
 
 
-def train(X, Y, epochs=300, lr=1e-3, batch_size=64, val_frac=0.1, seed=0):
+def train(X, Y, epochs=300, lr=1e-3, batch_size=64, val_frac=0.1, seed=0, init_weights=None):
     rng = np.random.default_rng(seed)
     N = len(X)
     perm = rng.permutation(N); n_val = max(1, int(N * val_frac))
     val_idx, tr_idx = perm[:n_val], perm[n_val:]
     Xtr, Ytr, Xva, Yva = X[tr_idx], Y[tr_idx], X[val_idx], Y[val_idx]
 
-    w = nn_mod.init_weights(seed=seed)
+    w = init_weights if init_weights is not None else nn_mod.init_weights(seed=seed)
     state = nn_mod.init_adam(w)
     train_losses, val_losses = [], []
     best_val = float("inf"); best = {k: v.copy() for k, v in w.items()}
@@ -135,6 +135,10 @@ def main():
     ap.add_argument("--epochs", type=int, default=300)
     ap.add_argument("--lr", type=float, default=1e-3)
     ap.add_argument("--batch", type=int, default=64)
+    ap.add_argument("--finetune", default=None,
+                    help="Path to existing weights to fine-tune from (e.g. nav_v6_base.npz)")
+    ap.add_argument("--seed", type=int, default=0,
+                    help="Random seed for weight initialisation")
     args = ap.parse_args()
 
     d = np.load(args.data, allow_pickle=False)
@@ -151,8 +155,10 @@ def main():
 
     gradient_check()
 
+    init_w = nn_mod.load(args.finetune) if args.finetune else None
     weights, tr_losses, va_losses = train(
-        X, Y, epochs=args.epochs, lr=args.lr, batch_size=args.batch)
+        X, Y, epochs=args.epochs, lr=args.lr, batch_size=args.batch,
+        seed=args.seed, init_weights=init_w)
 
     viz.plot_loss_curves(tr_losses, va_losses, out=f"fig_loss_{args.tag}.png")
     nn_mod.save(weights, f"nav_{args.tag}.npz")
