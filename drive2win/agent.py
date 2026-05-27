@@ -11,8 +11,8 @@ import numpy as np
 from . import nn as nn_mod
 from .normalize import sensors_to_input, clip_action
 
-STUCK_SPEED      = 0.3   # m/s — below this counts as stuck (not just slow cornering)
-STUCK_FRAMES     = 20    # frames at 20 Hz = 1.5 s before recovery kicks in
+STUCK_SPEED      = 0.2   # m/s — below this counts as stuck (not just slow cornering)
+STUCK_FRAMES     = 30    # frames at 20 Hz = 1.5 s before recovery kicks in
 RECOVER_FRAMES   = 14    # frames to reverse (0.7 s)
 
 
